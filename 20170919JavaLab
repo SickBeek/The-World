@@ -1,0 +1,11 @@
+for (i = 0; i != 5; i++) {
+			tmax = rdmarr[0];
+			for (j = 0; j != 100; j++)
+				if (rdmarr[j] > tmax && rdmarr[j] < 101) {
+					tmax = rdmarr[j];
+					maxj = j;
+				}
+			arrmax[i] = tmax;
+			rdmarr[maxj] *= 10;
+		}
+		//找出最大的五个数
