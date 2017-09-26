@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class TestCircle {
+	public static void main(String[] args) {
+	Person ps1=new Person();
+	Scanner reader =new Scanner (System.in);
+	double temp;
+	System.out.print("请输入此人的身高：");
+	temp=reader.nextDouble();
+	ps1.setHeight(temp);                   //设置身高
+	
+	System.out.print("请输入此人的体重：");
+	temp=reader.nextDouble();
+	ps1.setWeight(temp);                   //设置体重
+	
+	System.out.println(ps1.toString());    //输出信息
+	}
+}
+
+ class Person{
+	private double  weight=0,height=0;
+	
+	public String toString (){
+		return "此人的身高是"+height+"\n"+"体重是"+weight+"\n";
+	}                                      //重写toString()
+	
+	public void setHeight(double h){
+		height =h;
+	}                          
+	
+	public void setWeight(double w){
+		weight =w;
+	}
+}
