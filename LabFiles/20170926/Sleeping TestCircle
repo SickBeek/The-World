@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class TestCircle {
+	public static void main(String[] args) {
+		Circle cir1 = new Circle(),cir2=new Circle();
+		
+		System.out.println("请输入圆的半径：");
+		Scanner reader = new Scanner(System.in);           //输入一个新的半径
+		double newraid = reader.nextDouble();
+		cir1.setRaid(newraid);
+		System.out.println("此圆的半径是" + cir1.getRaid());
+		System.out.println("周长是" + cir1.getCircum());
+		System.out.println("面积是" + cir1.getArea());
+		
+		System.out.println("请输入圆的半径：");
+		newraid = reader.nextDouble();
+		cir2.setRaid(newraid);
+		System.out.println("此圆的半径是" + cir2.getRaid());
+		System.out.println("周长是" + cir2.getCircum());
+		System.out.println("面积是" + cir2.getArea());
+	}
+}
+
+class Circle {
+	static final double pi = 3.14;
+	private double raid = 0;
+
+	public void setRaid(double r) {
+		raid = r;                          //修改半径
+	}
+
+	public double getRaid() {
+		return raid;
+	}                                      //返回半径
+
+	public double getCircum() {
+		return 2 * pi * raid;
+	}                                     //计算周长并返回
+
+	public double getArea() {
+		return pi * raid * raid;
+	}                                     //计算面积并返回
+}
