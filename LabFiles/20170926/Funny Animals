@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class TestCircle {
+	public static void main(String[] args) {
+	Animal animal=new Elephant();
+	animal.run();
+	animal.eat();
+	
+	
+	animal=new Lion();
+	animal.run();
+	animal.eat();
+	
+	animal=new Zebra();
+	animal.run();
+	animal.eat();
+	}
+}
+
+abstract class Animal{
+	abstract void run();
+	abstract void eat();
+}
+
+
+class Elephant extends Animal{
+	void run (){
+		System.out.println("看！是大象在跑！");
+	}
+	
+	void eat(){
+		System.out.println("看！是大象在吃树叶！");
+	}
+}
+
+class Lion extends Animal{
+	void run (){
+		System.out.println("看！是狮子在跑！");
+	}
+	
+	void eat(){
+		System.out.println("看！是狮子在吃肉！");
+	}
+}
+
+class Zebra extends Animal{
+	void run (){
+		System.out.println("看！是斑马在跑！");
+	}
+	
+	void eat(){
+		System.out.println("看！是斑马在吃草！");
+	}
+}
