@@ -1,0 +1,48 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Joestar {
+	public static void main(String args[]) {
+		ArrayList<String> GroupA = new ArrayList<String>();
+		ArrayList<String> GroupB = new ArrayList<String>();
+		String temp = new String();
+		Scanner reader = new Scanner(System.in);
+
+		System.out.println("Please enter Group A members' names:");
+		while (reader.hasNext()) {
+			temp = reader.next();
+			if (temp.equals("quit"))
+				break;
+			GroupA.add(temp);
+		}
+
+		System.out.println("Please enter Group B members' names:");
+		while (reader.hasNext()) {
+			temp = reader.next();
+			if (temp.equals("quit"))
+				break;
+			GroupB.add(temp);
+		}//手动输入两个社团的成员名
+
+		int i, j;
+		System.out.println("Group A:");
+		for (i = 0; i != GroupA.size(); i++)
+			System.out.print(GroupA.get(i) + " ");
+		System.out.println();
+		System.out.println();
+
+		System.out.println("Group B:");
+		for (i = 0; i != GroupB.size(); i++)
+			System.out.print(GroupB.get(i) + " ");
+		System.out.println();
+		System.out.println();//打印两个社团的成员
+
+		System.out.println("Members in both Groups are:");
+		for (i = 0; i < GroupA.size(); i++)
+			for (j = 0; j < GroupB.size(); j++)
+				if (GroupA.get(i).equals(GroupB.get(j)))
+					System.out.print(GroupA.get(i) + " ");
+		System.out.println();
+		//输出同时参加两个社团的成员
+	}
+}
