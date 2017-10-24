@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Joestar {
+public static void main (String args[]){
+	ArrayList<Human> HumanTest=new ArrayList<Human>();
+	HumanTest.add((Human)new Chinese ("王老五"));
+	HumanTest.add((Human)new English ("Tom Cruise"));
+	HumanTest.add((Human)new Japanese ("新垣結衣"));
+	
+	Iterator<Human> iter=HumanTest.iterator();
+	while (iter.hasNext())
+		iter.next().sayHello();
+}
+
+}
+
+class Chinese extends Human {
+
+	public Chinese(String name) {
+		super(name);
+	}
+	
+	public void sayHello(){
+		System.out.println("你好！我叫"+name+"，很高兴认识你。");
+	}
+}
+
+class Japanese extends Human{
+	Japanese (String name ){
+		super(name);
+	}
+	
+	public void sayHello(){
+		System.out.println("初めまして、私は"+name+"と申します.");
+	}
+}
+
+class English extends Human{
+	English (String name){
+		super(name);
+	}
+	
+	public void sayHello(){
+		System.out.println("Hello!I'm "+name+ " and nice to meet you.");
+	}
+}
