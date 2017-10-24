@@ -1,0 +1,23 @@
+import java.util.HashMap;
+import java.util.Iterator;
+
+public class Joestar {
+	
+public static void main (String args[]){
+	HashMap<String,Double> Menu=new HashMap<String,Double>();
+	
+	Menu.put("北京烤鸭",189.0);
+	Menu.put("西芹炒肉",12.9);
+	Menu.put("酸菜鱼",69.0);
+	Menu.put("铁板牛柳",32.0);
+	
+	Iterator<String> iter=Menu.keySet().iterator();
+	double sum=0;
+	while (iter.hasNext())
+		sum+=Menu.get(iter.next());
+	
+	System.out.println("The sum is "+sum+" yuan.");
+}
+
+}
+
