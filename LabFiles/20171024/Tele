@@ -1,0 +1,61 @@
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.TreeMap;
+
+public class Joestar {
+	
+public static void main (String args[]){
+	TreeMap<MyKey,Television> tele =new TreeMap<MyKey,Television>();
+	Scanner reader=new Scanner(System.in);
+	int num=8,i;
+	for (i=0;i!=num;i++) 
+	{
+		System.out.println("Please enter the size and price:");
+		int s1=reader.nextInt();
+		int s2=reader.nextInt();
+		
+		tele.put(new MyKey(s2,s1),new Television(s1,s2));
+	}
+	
+	Iterator<TreeMap<MyKey,Television>> iter =((Object) tele).iterator();
+}
+
+}
+
+class MyKey implements Comparable{
+	private int myKey,myCompare;
+	
+	MyKey (int  s1,int s2){
+		myKey=s1;
+		myCompare=s2;
+	}
+	
+	public int compareTo(Object o){
+		MyKey other=(MyKey)o;
+		if (myCompare-other.myCompare<0)
+			return -1;
+		
+		if (myCompare-other.myCompare>0)
+			return 1;
+		
+			return 0;
+	}
+}
+
+class Television{
+	private int size,price;
+	
+	Television (int s,int p){
+		size=s;
+		price=p;
+	}
+	
+	int getSize(){
+		return size;
+	}
+	
+	int getPrice(){
+		return price;
+	}
+	
+}
