@@ -1,0 +1,66 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class JoJo {
+
+	public static void main(String[] args) {
+		HashMap<Cordinate,Double> matrix1=new HashMap<Cordinate,Double>();
+		HashMap<Cordinate,Double> matrix2=new HashMap<Cordinate,Double>();
+		Scanner reader=new Scanner(System.in);
+		int col1,ln1,col2,ln2;
+		
+		System.out.println("Please enter the matrix's column and line numbers: ");
+		col1=reader.nextInt();
+		ln1=reader.nextInt();
+		
+		while (true){
+		System.out.println("Please enter both  cordnites and values of  numbers which are not \"0\":");
+		matrix1.put(new Cordinate(reader.nextInt(),reader.nextInt()), reader.nextDouble());
+		if (reader.next().equals("quit"))
+			break;
+		}
+		
+		System.out.println("Please enter the matrix's column and line numbers: ");
+		col2=reader.nextInt();
+		ln2=reader.nextInt();
+		
+		while (true){
+		System.out.println("Please enter both  cordnites and values of  numbers which are not \"0\":");
+		matrix2.put(new Cordinate(reader.nextInt(),reader.nextInt()), reader.nextDouble());
+		if (reader.next().equals("quit"))
+			break;
+		}
+		
+		if (col1!=ln2)
+		{
+			System.out.println("Wrong matrices!!");
+		}
+		else {
+		int i,j,z;
+		for (i=0;i<col1;i++)
+		{
+			for (j=0;j<ln2;j++)
+			{
+				for (z=0;z<col2;z++)
+				{
+					Cordinate pos1=new Cordinate(),pos2; 
+					if(matrix1.containsKey())
+				}
+			}
+		}
+		}
+	}
+
+}
+
+class Cordinate{
+	private int cordx,cordy;
+	
+	Cordinate(int x,int y){
+		cordx=x;
+		cordy=y;
+	}
+	
+	public int getX(){return cordx;}
+	public int getY(){return cordy;}
+}
