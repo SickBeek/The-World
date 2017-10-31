@@ -1,0 +1,50 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class JoJo {
+
+	public static void main(String[] args) {
+		Scanner reader = new Scanner(System.in);
+		
+		System.out.println("Enter good's type:");
+		Goods good = new Goods(reader.next());
+		//System.out.println(good.isDanger);
+		Machine machine = new Machine();
+		try {
+			machine.checkBags(good);
+		} catch (DangerException e) {
+			e.toShow();
+		}
+	}
+
+}
+
+class Machine {
+	public void checkBags(Goods goods) throws DangerException {
+		if (goods.isDanger)
+			throw new DangerException();
+
+		else
+			System.out.println("Safe");
+	}
+}
+
+class Goods {
+	public boolean isDanger = false;
+	private String name;
+	private static String dangerList[] = { "Gasoline", "Explosives" };
+
+	Goods(String n) {
+		name = n;
+		for (String s : dangerList) {
+			if (name.equals(s))
+				isDanger = true;
+		}
+	}
+}
+
+class DangerException extends Exception {
+	public void toShow() {
+		System.out.println("Danger Detected!");
+	}
+}
