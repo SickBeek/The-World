@@ -12,22 +12,31 @@ public class JoJo {
 		int i, j, z, amount;
 
 		System.out
-				.println("Please enter the matrix's column and line numbers: ");
+				.println("Please enter the matrix1's column and line numbers: ");
 		col1 = reader.nextInt();
 		ln1 = reader.nextInt();
 		System.out.println("Please enter the amount:");
 		amount = reader.nextInt();
 		for (i = 0; i < amount; i++) {
-			System.out
-					.println("Please enter both  cordnites and values of  numbers which are not \"0\":");
-		
-			matrix1.put(new Cordinate(reader.nextInt(), reader.nextInt()),
-					reader.nextDouble());
+			System.out.println("Please enter both  cordnites and "
+					+ "values of  numbers which are not \"0\":");
+
+			Cordinate temp = new Cordinate(reader.nextInt(), reader.nextInt());
+			matrix1.put(temp, reader.nextDouble());
 
 		}
+		
+		for (i = 0; i < ln1; i++) {
+			for (j = 0; j < col1; j++){
+				Cordinate temp=new Cordinate(i,j);
+				System.out.print(matrixMulti.get(temp) + " ");
+			}//输出Matrix1 检查错误
+				
+			System.out.println();
+		}
 
-		System.out
-				.println("Please enter the matrix's column and line numbers: ");
+		System.out.println("Please enter the matrix2's "
+				+ "column and line numbers: ");
 		col2 = reader.nextInt();
 		ln2 = reader.nextInt();
 
@@ -36,9 +45,8 @@ public class JoJo {
 		for (i = 0; i < amount; i++) {
 			System.out
 					.println("Please enter both  cordnites and values of  numbers which are not \"0\":");
-		
-			matrix2.put(new Cordinate(reader.nextInt(), reader.nextInt()),
-					reader.nextDouble());
+			Cordinate temp = new Cordinate(reader.nextInt(), reader.nextInt());
+			matrix2.put(temp, reader.nextDouble());
 
 		}
 
@@ -63,7 +71,7 @@ public class JoJo {
 
 		for (i = 0; i < ln1; i++) {
 			for (j = 0; j < col2; j++)
-				System.out.print(matrixMulti.get(new Cordinate(i, j))+" " );
+				System.out.print(matrixMulti.get(new Cordinate(i, j)) + " ");
 			System.out.println();
 		}// 输出矩阵乘法结果
 
