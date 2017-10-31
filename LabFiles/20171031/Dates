@@ -1,0 +1,31 @@
+import java.util.Calendar;
+import java.util.Scanner;
+
+public class JoJo {
+
+	public static void main(String[] args) {
+		 //设置两个日期
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Scanner reader =new Scanner(System.in);
+       
+        /*
+        int y1=reader.nextInt();
+        int m1=reader.nextInt();
+        int d1=reader.nextInt();
+        int y2=reader.nextInt();
+        int m2=reader.nextInt();
+        int d2=reader.nextInt();
+       */
+        System.out.println("Please enter two dates(Example:2017 11 17):");
+        c1.set(reader.nextInt()-1900,reader.nextInt()-1,reader.nextInt());
+        c2.set(reader.nextInt()-1900,reader.nextInt()-1,reader.nextInt());
+        //转换为相对时间,即毫秒数
+        long t1 = c1.getTimeInMillis();
+        long t2 = c2.getTimeInMillis();
+        //计算天数
+        long days = Math.abs((t2 - t1)/(24 * 60 * 60 * 1000));
+        System.out.println("The time between two dates is "+days+"days.");
+	}
+
+}
