@@ -1,82 +1,65 @@
 import java.util.HashMap;
 import java.util.Scanner;
-
-public class JoJo {
-
+public class Joestar {
 	public static void main(String[] args) {
 		HashMap<Cordinate, Double> matrix1 = new HashMap<Cordinate, Double>();
 		HashMap<Cordinate, Double> matrix2 = new HashMap<Cordinate, Double>();
 		HashMap<Cordinate, Double> matrixMulti = new HashMap<Cordinate, Double>();
 		Scanner reader = new Scanner(System.in);
-		int col1, ln1, col2, ln2;
-		int i, j, z, amount;
+		int col1, ln1, col2, ln2, i, j, z, amount;
 
-		System.out
-				.println("Please enter the matrix1's column and line numbers: ");
-		col1 = reader.nextInt();
-		ln1 = reader.nextInt();
-		System.out.println("Please enter the amount:");
+		System.out.println("Please enter the matrix1's column and line numbers: ");
+		col1 = reader.nextInt();		ln1 = reader.nextInt();
+		System.out.println("Please enter the element which aren't \"0\" amount:");
 		amount = reader.nextInt();
 		for (i = 0; i < amount; i++) {
-			System.out.println("Please enter both  cordnites and "
-					+ "values of  numbers which are not \"0\":");
+			System.out.println("Please enter both  cordnites and " + "values of  numbers which are not \"0\":");
 
 			Cordinate temp = new Cordinate(reader.nextInt(), reader.nextInt());
 			matrix1.put(temp, reader.nextDouble());
 
-		}
-		
-		for (i = 0; i < ln1; i++) {
-			for (j = 0; j < col1; j++){
-				Cordinate temp=new Cordinate(i,j);
-				System.out.print(matrixMulti.get(temp) + " ");
-			}//输出Matrix1 检查错误
-				
-			System.out.println();
-		}
+		}//输入Matrix1的非零元素
 
-		System.out.println("Please enter the matrix2's "
-				+ "column and line numbers: ");
-		col2 = reader.nextInt();
-		ln2 = reader.nextInt();
-
-		System.out.println("Please enter the amount:");
-		amount = reader.nextInt();
-		for (i = 0; i < amount; i++) {
-			System.out
-					.println("Please enter both  cordnites and values of  numbers which are not \"0\":");
-			Cordinate temp = new Cordinate(reader.nextInt(), reader.nextInt());
-			matrix2.put(temp, reader.nextDouble());
-
-		}
+		System.out.println("Please enter the matrix2's " + "column and line numbers: ");
+		col2 = reader.nextInt();		ln2 = reader.nextInt();
 
 		if (col1 != ln2) {
 			System.out.println("Wrong matrices!!");
-		} else {
+		} else {//若不满足乘法条件，则输出错误信息，否则继续进行Matrix2的输入
 
+			System.out.println("Please enter the element which aren't \"0\" amount:");
+			amount = reader.nextInt();
+			for (i = 0; i < amount; i++) {
+				System.out.println("Please enter both  cordnites and values of  numbers which are not \"0\":");
+				Cordinate temp = new Cordinate(reader.nextInt(), reader.nextInt());
+				matrix2.put(temp, reader.nextDouble());
+			}
 			for (i = 0; i < ln1; i++) {
 				for (j = 0; j < col2; j++) {
 					double sum = 0;
-					for (z = 0; z < col1; z++) {
+					for (z = 0; z < col1; z++) {//用三重循环进行矩阵相乘
 						Cordinate pos1 = new Cordinate(i, z);
 						Cordinate pos2 = new Cordinate(z, j);
-						if (matrix1.containsKey(pos1)
-								&& matrix2.containsKey(pos2))
-							sum += matrix1.get(pos1) + matrix2.get(pos2);
+						if (matrix1.containsKey(pos1) && matrix2.containsKey(pos2))
+							sum += matrix1.get(pos1) * matrix2.get(pos2);//对一行和一列进行求和
 					}
-					matrixMulti.put(new Cordinate(i, j), sum);
+					if (sum != 0)
+						matrixMulti.put(new Cordinate(i, j), sum);//如果求和不等于零，
 				}
-			}
-		}// 计算矩阵的乘法
+			} // 计算矩阵的乘法
 
-		for (i = 0; i < ln1; i++) {
-			for (j = 0; j < col2; j++)
-				System.out.print(matrixMulti.get(new Cordinate(i, j)) + " ");
-			System.out.println();
-		}// 输出矩阵乘法结果
-
+		//	System.out.println(matrixMulti.toString());
+			for (i = 0; i < ln1; i++) {
+				for (j = 0; j < col2; j++) {
+					if (matrixMulti.containsKey(new Cordinate(i, j)))
+						System.out.printf("%-8.2f",matrixMulti.get(new Cordinate(i, j)));
+					else
+						System.out.printf("%-8d",0);
+				}
+				System.out.println();
+			} // 输出矩阵乘法结果
+		}
 	}
-
 }
 
 class Cordinate {
@@ -93,5 +76,27 @@ class Cordinate {
 
 	public int getY() {
 		return cordy;
+	}
+
+	public boolean equals(Object obj) {//必须实现此函数和函数hashCode()的重写
+		if (this == obj)// 判断是否是本类的一个引用
+			return true;
+		if (obj == null)
+			return false;
+
+		Cordinate cd = (Cordinate) obj;
+		if (this.cordx != cd.cordx)
+			return false;
+		if (this.cordy != cd.cordy)
+			return false;
+
+		return true;
+	}
+
+	public int hashCode() {
+		int result = 17;
+		result = 31 * result + cordx;
+		result = 31 * result + cordy;
+		return result;
 	}
 }
