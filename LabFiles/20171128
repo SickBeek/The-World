@@ -1,11 +1,29 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Scanner;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class Jonathan {
 
 	public static void main(String[] args) {
-		Frame frame = new Frame();
+		int num=10;
+		String[] ques=new String[num];
+		Scanner reader=new Scanner(System.in);
+		
+		HashMap<String,String[]> ans=new HashMap<String,String[]>();
+		
+		for (int i=0;i<num;i++)
+			ques[i]=reader.next();
+		
+		Frame frame = new Frame(ans,ques);
 		frame.show();
 	}
 
@@ -17,10 +35,16 @@ class Frame implements ActionListener {
 	JButton button1, button2;
 	JTextField text1, text3;
 	JTextArea text2;
+	String [] QuestionLib;
+    HashMap<String,String[]> AnswerLib;
+    
 	Font font1 = new Font("TimesRoman", Font.BOLD, 11);
 	int quizStart = 0, total = 0, correct = 0;
-
-	Frame() {
+	
+    
+	Frame(HashMap<String,String[]> anslib,String[] queslib) {
+		QuestionLib=queslib;
+		AnswerLib=anslib;
 		frame = new JFrame("单机版中英文单词测试程序");
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(400, 300, 300, 400);
@@ -48,7 +72,7 @@ class Frame implements ActionListener {
 		frame.add(label2);
 
 		label1 = new JLabel();
-		label1.setBounds(140, 20, 120, 30);
+		label1.setBounds(140, 20, 200, 30);
 		label1.setOpaque(true);
 		label1.setText("已给出" + total + "题；答对" + correct + "题");
 		frame.add(label1);
@@ -81,7 +105,7 @@ class Frame implements ActionListener {
 		Thread giveWord = new Thread(new Runnable() {
 			public void run() {
 				for (int i = 0; i < 10; i++) {
-					label2.setText("" + i);
+					label2.setText(QuestionLib[i]);
 					total++;
 					label1.setText("已给出" + total + "题；答对" + correct + "题");
 					text2.setText("A\n" + "B\n");
@@ -93,11 +117,13 @@ class Frame implements ActionListener {
 						label3.setText("回答超时!");
 					else if (text1.getText().equals("A")) {
 						correct++;
-						label3.setText("Yes!");
+						label3.setText("回答正确!");
 					} else
-						label3.setText("No!");
+						label3.setText("回答错误!");
 					label1.setText("已给出" + total + "题；答对" + correct + "题");
+					text1.setText("");
 				}
+				JOptionPane.showMessageDialog(frame, "测试结束，您的得分为"+correct+"分");
 			}
 		});
 		giveWord.start();
