@@ -21,8 +21,8 @@ public class Jonathan {
 		HashMap<String,String> ans=new HashMap<String,String>();
 		
 		for (int i=0;i<num;i++){
-			ques[i]=reader.next();
-			ans.put(ques[i], reader.next());
+			ques[i]=""+'A'+i%4;
+			ans.put(ques[i],ques[i]);
 		}
 		
 		Frame frame = new Frame(ans,ques);
@@ -126,8 +126,7 @@ class Frame implements ActionListener {
 		buttonD.addActionListener(this);
 		frame.add(buttonD);
 		
-		frame.setVisible(true);
-		frame.validate();
+	    frame.setVisible(true);
 	}
 
 	void quizStart() {
