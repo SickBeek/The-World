@@ -1,0 +1,112 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Jonathan {
+
+	public static void main(String[] args) {
+		Frame frame = new Frame();
+		frame.show();
+	}
+
+}
+
+class Frame implements ActionListener {
+	JFrame frame;
+	JLabel label1, label2, label3;
+	JButton button1, button2;
+	JTextField text1, text3;
+	JTextArea text2;
+	Font font1 = new Font("TimesRoman", Font.BOLD, 11);
+	int quizStart = 0, total = 0, correct = 0;
+
+	Frame() {
+		frame = new JFrame("单机版中英文单词测试程序");
+		frame.getContentPane().setLayout(null);
+		frame.setBounds(400, 300, 300, 400);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public void show() {
+		addLabel();
+		addButton();
+		addText();
+		frame.setVisible(true);
+	}
+
+	void addLabel() {
+		label3 = new JLabel();
+		label3.setBounds(40, 220, 120, 40);
+		label3.setOpaque(true);
+		label3.setText("请输入您的答案：");
+		frame.add(label3);
+
+		label2 = new JLabel();
+		label2.setBounds(40, 20, 80, 30);
+		label2.setOpaque(true);
+		label2.setText("中文单词");
+		frame.add(label2);
+
+		label1 = new JLabel();
+		label1.setBounds(140, 20, 120, 30);
+		label1.setOpaque(true);
+		label1.setText("已给出" + total + "题；答对" + correct + "题");
+		frame.add(label1);
+	}
+
+	void addButton() {
+		button1 = new JButton("开始");
+		button1.addActionListener(this);
+		button1.setBounds(50, 270, 60, 30);
+		frame.add(button1);
+	}
+
+	void addText() {
+		text1 = new JTextField();
+		text1.setBounds(165, 220, 60, 40);
+		text1.setOpaque(true);
+		frame.add(text1);
+
+		text2 = new JTextArea();
+		text2.setBounds(40, 60, 200, 140);
+		text2.setText("选项在这里显示");
+		text2.setEditable(false);
+		text2.setOpaque(true);
+		text2.setFont(font1);
+		frame.add(text2);
+
+	}
+
+	void quizStart() {
+		Thread giveWord = new Thread(new Runnable() {
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					label2.setText("" + i);
+					total++;
+					label1.setText("已给出" + total + "题；答对" + correct + "题");
+					text2.setText("A\n" + "B\n");
+					try {
+						Thread.sleep(3000);
+					} catch (Exception e) {
+					}
+					if (text1.getText().equals(""))
+						label3.setText("回答超时!");
+					else if (text1.getText().equals("A")) {
+						correct++;
+						label3.setText("Yes!");
+					} else
+						label3.setText("No!");
+					label1.setText("已给出" + total + "题；答对" + correct + "题");
+				}
+			}
+		});
+		giveWord.start();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == button1) {
+			quizStart();
+		}
+	}
+
+}
