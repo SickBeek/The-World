@@ -18,10 +18,12 @@ public class Jonathan {
 		String[] ques=new String[num];
 		Scanner reader=new Scanner(System.in);
 		
-		HashMap<String,String[]> ans=new HashMap<String,String[]>();
+		HashMap<String,String> ans=new HashMap<String,String>();
 		
-		for (int i=0;i<num;i++)
+		for (int i=0;i<num;i++){
 			ques[i]=reader.next();
+			ans.put(ques[i], reader.next());
+		}
 		
 		Frame frame = new Frame(ans,ques);
 		frame.show();
@@ -32,17 +34,17 @@ public class Jonathan {
 class Frame implements ActionListener {
 	JFrame frame;
 	JLabel label1, label2, label3;
-	JButton button1, button2;
+	JButton button1, buttonA,buttonB,buttonC,buttonD;
 	JTextField text1, text3;
 	JTextArea text2;
 	String [] QuestionLib;
-    HashMap<String,String[]> AnswerLib;
+    HashMap<String,String> AnswerLib;
     
 	Font font1 = new Font("TimesRoman", Font.BOLD, 11);
 	int quizStart = 0, total = 0, correct = 0;
 	
     
-	Frame(HashMap<String,String[]> anslib,String[] queslib) {
+	Frame(HashMap<String,String> anslib,String[] queslib) {
 		QuestionLib=queslib;
 		AnswerLib=anslib;
 		frame = new JFrame("单机版中英文单词测试程序");
@@ -81,7 +83,7 @@ class Frame implements ActionListener {
 	void addButton() {
 		button1 = new JButton("开始");
 		button1.addActionListener(this);
-		button1.setBounds(50, 270, 60, 30);
+		button1.setBounds(20, 270, 250, 60);
 		frame.add(button1);
 	}
 
@@ -100,9 +102,38 @@ class Frame implements ActionListener {
 		frame.add(text2);
 
 	}
+	
+	void showABCD(){
+		button1.setVisible(false);
+		
+		buttonA=new JButton("A");
+		buttonA.setBounds(20, 270, 50, 50);
+		buttonA.addActionListener(this);
+		frame.add(buttonA);
+		
+		buttonB=new JButton("B");
+		buttonB.setBounds(85, 270, 50, 50);
+		buttonB.addActionListener(this);
+		frame.add(buttonB);
+		
+		buttonC=new JButton("C");
+		buttonC.setBounds(150, 270, 50, 50);
+		buttonC.addActionListener(this);
+		frame.add(buttonC);
+		
+		buttonD=new JButton("D");
+		buttonD.setBounds(215, 270, 50, 50);
+		buttonD.addActionListener(this);
+		frame.add(buttonD);
+		
+		frame.setVisible(true);
+		frame.validate();
+	}
 
 	void quizStart() {
+		showABCD();
 		Thread giveWord = new Thread(new Runnable() {
+			
 			public void run() {
 				for (int i = 0; i < 10; i++) {
 					label2.setText(QuestionLib[i]);
@@ -115,7 +146,7 @@ class Frame implements ActionListener {
 					}
 					if (text1.getText().equals(""))
 						label3.setText("回答超时!");
-					else if (text1.getText().equals("A")) {
+					else if (text1.getText().equals(AnswerLib.get(QuestionLib[i]))) {
 						correct++;
 						label3.setText("回答正确!");
 					} else
@@ -133,6 +164,14 @@ class Frame implements ActionListener {
 		if (e.getSource() == button1) {
 			quizStart();
 		}
+		if (e.getSource()==buttonA)
+			text1.setText("A");
+		if (e.getSource()==buttonB)
+			text1.setText("B");
+		if (e.getSource()==buttonC)
+			text1.setText("C");
+		if (e.getSource()==buttonD)
+			text1.setText("D");
 	}
 
 }
