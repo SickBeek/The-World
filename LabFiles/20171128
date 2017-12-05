@@ -1,32 +1,41 @@
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.io.*;
 import java.util.HashMap;
-import java.util.Scanner;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class Jonathan {
 
 	public static void main(String[] args) {
-		int num=10;
-		String[] ques=new String[num];
-		Scanner reader=new Scanner(System.in);
-		
-		HashMap<String,String> ans=new HashMap<String,String>();
-		
-		for (int i=0;i<num;i++){
-			ques[i]=(String)(""+(char)('A'+i%4));
-			ans.put(ques[i],ques[i]);
-		}
-		
-		Frame frame = new Frame(ans,ques);
-		frame.show();
+
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				int num = 10;
+				String[][] ques = new String[num][5];
+				HashMap<String, String> ans = new HashMap<String, String>();
+				File file = new File("Questions.txt");
+				BufferedReader reader = null;
+				
+				try {
+					InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "UTF-8");
+					reader = new BufferedReader(isr);
+					for (int i = 0; i < num; i++) {
+						ques[i][0] = reader.readLine();
+						ques[i][1] = reader.readLine();
+						ques[i][2] = reader.readLine();
+						ques[i][3] = reader.readLine();
+						ques[i][4] = reader.readLine();
+						ans.put(ques[i][0], reader.readLine());
+				}
+}
+				 catch (Exception e) {
+					 System.out.println("Not Found!");
+				}
+				Frame frame = new Frame(ans, ques);
+				frame.show();
+			}
+		});
+
 	}
 
 }
@@ -34,21 +43,20 @@ public class Jonathan {
 class Frame implements ActionListener {
 	JFrame frame;
 	JLabel label1, label2, label3;
-	JButton button1, buttonA,buttonB,buttonC,buttonD;
+	JButton button1, buttonA, buttonB, buttonC, buttonD;
 	JTextField text1, text3;
 	JTextArea text2;
-	String [] QuestionLib;
-    HashMap<String,String> AnswerLib;
-    
+	String[][] QuestionLib;
+	HashMap<String, String> AnswerLib;
+
 	Font font1 = new Font("TimesRoman", Font.BOLD, 11);
-	Font font2=new Font("TimesRoman", Font.BOLD, 25);
-	Font font3=new Font("TimesRoman", Font.BOLD, 14);
+	Font font2 = new Font("TimesRoman", Font.BOLD, 25);
+	Font font3 = new Font("TimesRoman", Font.BOLD, 14);
 	int quizStart = 0, total = 0, correct = 0;
-	
-    
-	Frame(HashMap<String,String> anslib,String[] queslib) {
-		QuestionLib=queslib;
-		AnswerLib=anslib;
+
+	Frame(HashMap<String, String> anslib, String[][] queslib) {
+		QuestionLib = queslib;
+		AnswerLib = anslib;
 		frame = new JFrame("单机版中英文单词测试程序");
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(400, 300, 300, 400);
@@ -105,50 +113,52 @@ class Frame implements ActionListener {
 		frame.add(text2);
 
 	}
-	
-	void showABCD(){
+
+	void showABCD() {
 		button1.setVisible(false);
-		
-		buttonA=new JButton("A");
+
+		buttonA = new JButton("A");
 		buttonA.setBounds(20, 270, 50, 50);
 		buttonA.addActionListener(this);
 		frame.add(buttonA);
-		
-		buttonB=new JButton("B");
+
+		buttonB = new JButton("B");
 		buttonB.setBounds(85, 270, 50, 50);
 		buttonB.addActionListener(this);
 		frame.add(buttonB);
-		
-		buttonC=new JButton("C");
+
+		buttonC = new JButton("C");
 		buttonC.setBounds(150, 270, 50, 50);
 		buttonC.addActionListener(this);
 		frame.add(buttonC);
-		
-		buttonD=new JButton("D");
+
+		buttonD = new JButton("D");
 		buttonD.setBounds(215, 270, 50, 50);
 		buttonD.addActionListener(this);
 		frame.add(buttonD);
-		
-	    frame.setVisible(true);
+
+		frame.setVisible(true);
 	}
 
 	void quizStart() {
 		showABCD();
 		Thread giveWord = new Thread(new Runnable() {
-			
 			public void run() {
 				for (int i = 0; i < 10; i++) {
-					label2.setText(QuestionLib[i]);
+					label2.setText(QuestionLib[i][0]);
 					total++;
 					label1.setText("已给出" + total + "题；答对" + correct + "题");
-					text2.setText("A\n" + "B\n");
+					text2.setText(QuestionLib[i][1] + "\n" + QuestionLib[i][2]
+							+ "\n" + QuestionLib[i][3] + "\n"
+							+ QuestionLib[i][4] + "\n");
 					try {
 						Thread.sleep(3000);
 					} catch (Exception e) {
 					}
 					if (text1.getText().equals(""))
 						label3.setText("回答超时!");
-					else if (text1.getText().equals(AnswerLib.get(QuestionLib[i]))) {
+					else if (text1.getText().equals(
+							AnswerLib.get(QuestionLib[i][0]))) {
 						correct++;
 						label3.setText("回答正确!");
 					} else
@@ -156,7 +166,8 @@ class Frame implements ActionListener {
 					label1.setText("已给出" + total + "题；答对" + correct + "题");
 					text1.setText("");
 				}
-				JOptionPane.showMessageDialog(frame, "测试结束，您的得分为"+correct+"分");
+				JOptionPane.showMessageDialog(frame, "测试结束，您的得分为" + correct
+						+ "分","提示",JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		giveWord.start();
@@ -166,13 +177,13 @@ class Frame implements ActionListener {
 		if (e.getSource() == button1) {
 			quizStart();
 		}
-		if (e.getSource()==buttonA)
+		if (e.getSource() == buttonA)
 			text1.setText("A");
-		if (e.getSource()==buttonB)
+		if (e.getSource() == buttonB)
 			text1.setText("B");
-		if (e.getSource()==buttonC)
+		if (e.getSource() == buttonC)
 			text1.setText("C");
-		if (e.getSource()==buttonD)
+		if (e.getSource() == buttonD)
 			text1.setText("D");
 	}
 
